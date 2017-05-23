@@ -1,0 +1,57 @@
+﻿@model SmartSnag.Domain.Entities.WorkPackage
+
+@{
+    ViewBag.Title = "Work package";
+}
+
+@section SidePanel{
+    @Html.Action("List", "WorkPackage")
+}
+
+
+
+@if (TempData["message"] != null)
+{
+    @Html.Partial("MessageContainer");
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">@ViewBag.title</div>
+    <div class="panel-body">
+        <h3>Add</h3>
+        <hr />
+        @using (Html.BeginForm("Create", "WorkPackage", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10" style="font-weight:bold;">
+                    <label>Please enter work package details</label>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => Model.WorkPackageCode, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => Model.WorkPackageCode, new { @class = "form-control", @type = "number", @placeholder="e.g. 110, 120", @max="999", @min="1"})
+                    @Html.ValidationMessageFor(m => Model.WorkPackageCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.WorkPackageDescription, new { @class="control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.WorkPackageDescription, new { @class = "form-control"})
+                    @Html.ValidationMessageFor(m => m.WorkPackageDescription,"", new { @class="text-danger"})
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <a href=@Url.Action("ResetForm", "WorkPackage")><input type="button" value="Reset" class="btn btn-primary" /></a>
+                </div>
+            </div>
+        }
+
+        
+    </div>
+</div>
+

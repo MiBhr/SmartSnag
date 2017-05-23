@@ -1,0 +1,97 @@
+﻿@model IEnumerable<SmartSnag.Domain.Entities.Company>
+
+@using SmartSnag.Domain.Concrete
+@using SmartSnag.Domain.Entities
+
+<style type="text/css">
+    a.custom-action-link {
+        color: black;
+        text-decoration:none;
+    }
+    a.custom-action-link:hover{
+        font-weight:bold; 
+    } 
+
+    .faded-text{
+        color: #808080;
+    }
+</style>
+
+    <div class="panel panel-primary ">
+        <div class="panel-heading">List of Companies</div>
+        <div class="panel-body scrollable">
+            <table class="table table-striped table-hover ">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(m => m.CompanyName)
+                        </th>
+                        <th style="text-align:center;">
+                            @Html.DisplayName("Category")
+                          
+                        </th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td width="70%">    
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                @Html.ActionLink(item.CompanyName, "Edit", new { item.CompanyID }, new { @class = "custom-action-link" })
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="faded-text">
+                                              @{
+                                                  var context = new EFDbContext(); 
+                                                  var query = from c in context.Companies
+                                                              join d in context.WorkPackages on c.CompanyID equals d.CompanyID
+                                                              where c.CompanyID == item.CompanyID
+                                                              select d.WorkPackageDescription;
+
+                                                    @query.FirstOrDefault();
+                                                  }
+                                            </div>
+                                        </td>
+                                    </tr>                               
+                               </table>
+                                                 
+                           </td>
+                            <td width="30%" align="center">
+                               @switch (item.CompanyCategory)
+                                       {
+                                           case CompanyCategory.Client:
+                                                <a href="#" data-toggle="tooltip" title="The Client">
+                                                    <img src="@Url.Content("~/Icons/client.png")" class="icon-size-to-font-15" />
+                                                </a>
+                                                break;
+                                           case CompanyCategory.DesignTeam:
+                                                <a href="#" data-toggle="tooltip" title="Design team">
+                                                    <img src="@Url.Content("~/Icons/Designteam.png")" class="icon-size-to-font-15" />
+                                                </a>
+                                                break;
+
+                                            case CompanyCategory.PrincipalContractor:
+                                                <a href="#" data-toggle="tooltip" title="Principal Contractor">
+                                                    <img src="@Url.Content("~/Icons/PrincipalContractor.png")" class="icon-size-to-font-15" />
+                                                </a>
+                                                break;
+                                            default:
+                                                <a href="#" data-toggle="tooltip" title="Subcontractor">
+                                                <img src="@Url.Content("~/Icons/working1.png")" class="icon-size-to-font-15" />
+                                                </a>
+                                                break;
+                                       }   
+                            </td>
+
+                        </tr>
+                    }
+            </table>
+        </div>
+        <div class="panel-footer panel-default">Powrót</div>
+    </div>
+
+

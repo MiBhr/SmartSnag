@@ -1,0 +1,39 @@
+﻿.no-overflow{
+    overflow:hidden;
+}
+
+.margin-top-1{
+    margin-top:1%;
+
+}
+
+.show-grid[class^=col-md]{
+    background-color: #ddd;
+    border: 1px solid red;
+}
+
+.border-left{
+    border-left:2px solid red;
+}
+
+.border-right{
+    border-right:2px solid red;
+}
+
+.scrollable{
+    height:80vh;
+    overflow:auto;
+    display:block;
+}
+
+.icon-size-to-font-15{
+    height:2em;
+    width:2em;
+    color:red;
+}
+
+
+
+
+
+

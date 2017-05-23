@@ -1,0 +1,65 @@
+﻿@model SmartSnag.Domain.Entities.WorkPackage
+
+@{
+    ViewBag.title = "Work package";
+}
+   
+@section SidePanel
+{
+    @Html.Action("List", "WorkPackage")
+}
+
+
+
+@if (TempData["message"] != null)
+{
+    @Html.Partial("MessageContainer");
+}
+    
+    <div class="panel panel-primary">
+        <div class="panel-heading">@ViewBag.title</div>
+    <div class="panel-body">
+        <h3>Edit</h3>
+        <hr />
+        @using (Html.BeginForm("Edit", "WorkPackage",FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10" style="font-weight:bold;">
+                    <label>Please modify work package details</label>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.WorkPackageID, null, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 col-md-2-offset">
+                        @Html.TextBoxFor(m => m.WorkPackageID, new { @class = "form-control", @readonly ="readonly" })
+                    </div>
+                </div>
+
+            foreach (var property in ViewData.ModelMetadata.Properties)
+            {
+                if(property.PropertyName != "WorkPackageID")
+                {
+                       <div class="form-group">
+                        <label class="control-label col-md-2">@property.DisplayName</label>
+                        <div class="col-md-10 col-md-2-offset">
+                            @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+                            @Html.ValidationMessage(property.PropertyName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+            }
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-2">
+                    <input type="submit" class="btn btn-primary" value="Save changes" />
+                </div>
+            </div>
+        }
+    </div>
+        <div class="panel-footer">
+            @Html.ActionLink("Create new work package", "Create")
+        </div>
+</div> 
+
+

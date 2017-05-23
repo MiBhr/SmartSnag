@@ -1,0 +1,67 @@
+﻿@model SmartSnag.Domain.Entities.Company
+@{
+    ViewBag.Title = "Company";
+}
+
+@section SidePanel{
+       @Html.Action("List", "Company")
+    }
+
+
+@if (TempData["message"] != null)
+{
+    @Html.Partial("MessageContainer");
+}
+
+ <div class="panel panel-primary">
+    <div class="panel-heading">@ViewBag.Title</div>
+    <div class="panel-body">
+        <h3>Add</h3>
+        <hr />
+        @using (Html.BeginForm("Create", "Company", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10" style="font-weight:bold;">
+                    <label>Please enter required information about the new Company</label>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                </div>
+            </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CompanyName, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CompanyCategory, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EnumDropDownListFor(m => m.CompanyCategory, "Select company category", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.CompanyCategory, "", new { @style = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor( m=> m.WorkPackageID, "WorkPackage", new { @class = "control-label col-md-2"})
+                        <div class="col-md-10">                         
+                            @Html.DropDownListFor(m => m.WorkPackageID, (IEnumerable<SelectListItem>)ViewBag.WorkPackage , "Select work package" ,new { @class = "form-control"})                        
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" class="btn btn-primary" value="Create" />
+                            <a href="@Url.Action("ResetForm","Company")"><input type="button" value="Reset" class="btn btn-primary" /></a>
+                        </div>
+                    </div>
+        }
+    </div>
+    <div class="panel-footer panel-default">Powrót</div>
+</div>
+
+
+
+
+
+
+

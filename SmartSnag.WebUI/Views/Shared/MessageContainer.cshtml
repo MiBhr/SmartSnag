@@ -1,0 +1,18 @@
+﻿
+
+@if (TempData["message"].ToString() == "Success")
+{
+    <div class="alert alert-success alert-dismissable fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["message"]! </strong>@String.Format("Database has been updated")
+    </div>
+}
+
+@if (TempData["message"].ToString() == "Oops")
+{
+    <div class="alert alert-danger alert-dismissable fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["message"]! </strong>@String.Format("Something went wrong. Plese try again.")
+    </div>
+}
+  
